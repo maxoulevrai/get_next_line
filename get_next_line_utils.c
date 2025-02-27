@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:07:45 by root              #+#    #+#             */
-/*   Updated: 2025/02/27 19:40:02 by root             ###   ########.fr       */
+/*   Updated: 2025/02/27 20:33:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	gnl_len(void *buf)
 	return (i);
 }
 
-char	*strndup(char *src, size_t siz)
+char	*ft_strndup(char *src, size_t siz)
 {
 	char	*dst;
 	size_t	i;
