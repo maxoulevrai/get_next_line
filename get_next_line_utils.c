@@ -6,40 +6,59 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:07:45 by root              #+#    #+#             */
-/*   Updated: 2025/02/27 20:33:57 by root             ###   ########.fr       */
+/*   Updated: 2025/03/03 04:38:42 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	gnl_len(void *buf)
+int	ft_strlen_gnl(char *stash)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (((char *)buf)[i] != '\n')
+	while (stash[i] && stash[i] != '\n')
 		i++;
 	return (i);
 }
 
-char	*ft_strndup(char *src, size_t siz)
+char	*ft_strcpy_line(char *stash)
 {
-	char	*dst;
-	size_t	i;
+	int		i;
+	char	*line;
 
+	
 	i = 0;
-	dst = NULL;
-	if (!src)
+	line = NULL;
+	if (!stash)
 		return (NULL);
-	dst = malloc(sizeof(char) * siz + 1);
-	if (!dst)
+	line = malloc(sizeof(char) * (ft_strlen_gnl(stash) + 1));
+	if (!line)
 		return (NULL);
-	while (src[i] && i < siz - 1)
+	while (stash[i] && stash[i] != '\n')
 	{
-		dst[i] = src[i];
+		line[i] = stash[i];
 		i++;
 	}
-	dst[i] = '\0';
-	return (dst);
+	line[i] = '\0';
+	return (line);
 }
 
+char	*ft_stash_cleanup(char *stash)
+{
+	int		i;
+	int		j;
+	char	*trimmed_line;
+	
+	i = 0;
+	j = 0;
+	trimmed_line = NULL;
+	while (stash[i] != '\n')
+		i++;
+	i++;
+	while (stash[i])
+	{
+		trimmed_line[j] = stash[i];
+	}
+	return (trimmed_line);
+}
