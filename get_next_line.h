@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:03:31 by root              #+#    #+#             */
-/*   Updated: 2025/02/27 20:33:45 by root             ###   ########.fr       */
+/*   Updated: 2025/03/04 02:40:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 5
 
+int		ft_strlen_gnl(char *stash);
+int		is_line_complete(char *stash);
 char	*get_next_line(int fd);
-char	*ft_strndup(char *src, size_t siz);
-size_t	gnl_len(void *buf);
-
+char	*line_cpy(char *src);
+void	ft_strcat(char *src, char *dst);
+void	stash_cleanup(char *stash);
 
 #endif

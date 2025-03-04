@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:07:45 by root              #+#    #+#             */
-/*   Updated: 2025/03/03 04:38:42 by root             ###   ########.fr       */
+/*   Updated: 2025/03/04 03:04:48 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,56 @@ int	ft_strlen_gnl(char *stash)
 	return (i);
 }
 
-char	*ft_strcpy_line(char *stash)
+int	is_line_complete(char *stash)
 {
-	int		i;
-	char	*line;
+	int	i;
 
-	
 	i = 0;
-	line = NULL;
-	if (!stash)
-		return (NULL);
-	line = malloc(sizeof(char) * (ft_strlen_gnl(stash) + 1));
-	if (!line)
-		return (NULL);
-	while (stash[i] && stash[i] != '\n')
+	while (stash[i])
 	{
-		line[i] = stash[i];
+		if (stash[i] == '\n')
+			return (1);
 		i++;
 	}
-	line[i] = '\0';
-	return (line);
+	return (0);
+}
+void	ft_strcat(char *src, char *dst)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = ft_strlen_gnl(dst);
+	while (src[j] && src[j] != '\n')
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	dst[i + j] = '\0';
 }
 
-char	*ft_stash_cleanup(char *stash)
+char	*line_cpy(char *src)
+{
+	int		i;
+	char	*dst;
+	
+	i = 0;
+	dst = NULL;
+	if (!src)
+		return (NULL);
+	dst = malloc(sizeof(char) * (ft_strlen_gnl(src) + 1));
+	if (!dst)
+		return (NULL);
+	while (src[i] && src[i] != '\n')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+void	stash_cleanup(char *stash)
 {
 	int		i;
 	int		j;
@@ -59,6 +86,7 @@ char	*ft_stash_cleanup(char *stash)
 	while (stash[i])
 	{
 		trimmed_line[j] = stash[i];
+		i++;
 	}
-	return (trimmed_line);
+	trimmed_line[i] = '\0';
 }
