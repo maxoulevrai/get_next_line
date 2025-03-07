@@ -6,11 +6,35 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/04 03:04:04 by root             ###   ########.fr       */
+/*   Updated: 2025/03/07 17:17:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_strlen_gnl(char *stash)
+{
+	int	i;
+
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	return (i);
+}
+
+int	is_line_complete(char *stash)
+{
+	int	i;
+
+	i = 0;
+	while (stash[i])
+	{
+		if (stash[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 char	*get_next_line(int fd)
 {
@@ -21,13 +45,19 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE < 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
+	read_bytes = 1;
+	next_line = NULL;
+	stash = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!stash)
+		return (NULL);
+	stash[0] = '\0';
 	while (!is_line_complete(stash) && read_bytes > 0)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		ft_strcat(buf, stash);
 	}
 	next_line = line_cpy(stash);
-	stash_cleanup(stash);
+	stash_cleanup(&stash);
 	return (next_line);
 }
 

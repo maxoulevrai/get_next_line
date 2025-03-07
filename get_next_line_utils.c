@@ -6,35 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:07:45 by root              #+#    #+#             */
-/*   Updated: 2025/03/04 03:04:48 by root             ###   ########.fr       */
+/*   Updated: 2025/03/07 17:20:51 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen_gnl(char *stash)
-{
-	int	i;
 
-	i = 0;
-	while (stash[i] && stash[i] != '\n')
-		i++;
-	return (i);
-}
-
-int	is_line_complete(char *stash)
-{
-	int	i;
-
-	i = 0;
-	while (stash[i])
-	{
-		if (stash[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 void	ft_strcat(char *src, char *dst)
 {
 	int	i;
@@ -42,6 +20,11 @@ void	ft_strcat(char *src, char *dst)
 
 	j = 0;
 	i = ft_strlen_gnl(dst);
+	if (!dst)
+	{
+		dst = malloc(sizeof(char) * ft_strlen_gnl(src) + ft_strlen_gnl(dst) + 1);
+		dst[0] = '\0';
+	}
 	while (src[j] && src[j] != '\n')
 	{
 		dst[i + j] = src[j];
@@ -71,22 +54,29 @@ char	*line_cpy(char *src)
 	return (dst);
 }
 
-void	stash_cleanup(char *stash)
+void	stash_cleanup(char **stash)
 {
 	int		i;
 	int		j;
 	char	*trimmed_line;
-	
+
 	i = 0;
 	j = 0;
-	trimmed_line = NULL;
-	while (stash[i] != '\n')
+	while ((*stash)[i] && (*stash)[i] != '\n')
 		i++;
-	i++;
-	while (stash[i])
+	if (!(*stash)[i])
 	{
-		trimmed_line[j] = stash[i];
-		i++;
+		free(*stash);
+		*stash = NULL;
+		return ;
 	}
-	trimmed_line[i] = '\0';
+	i++;
+	trimmed_line = malloc(sizeof(char) * (ft_strlen_gnl(*stash) - i + 1));
+	if (!trimmed_line)
+		return ;
+	while ((*stash)[i])
+		trimmed_line[j++] = (*stash)[i++];
+	trimmed_line[j] = '\0';
+	free(*stash);
+	*stash = trimmed_line;
 }
