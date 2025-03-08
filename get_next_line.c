@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/08 01:13:11 by root             ###   ########.fr       */
+/*   Updated: 2025/03/08 03:21:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ int	is_line_complete(char *stash)
 	return (0);
 }
 
+void	*ft_calloc(size_t nmemb, size_t siz)
+{
+	unsigned char	*mem;
+	size_t			i;
+
+	i = 0;
+	mem = NULL;
+	if (siz && nmemb > (UINT_MAX / siz))
+		return (NULL);
+	mem = malloc(nmemb * siz);
+	if (!mem)
+		return (NULL);
+	while (i < siz)
+	{
+		((char *)mem)[i] = 0;
+		i++;
+	}
+	return (mem);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
@@ -48,8 +68,7 @@ char	*get_next_line(int fd)
 	read_bytes = 1;
 	if (!stash)
 	{
-		stash = malloc(sizeof(char) * BUFFER_SIZE + 1);
-		stash[0] = '\0';
+		stash = ft_calloc(1, sizeof(char));
 	}
 	while (!is_line_complete(stash) && read_bytes > 0)
 	{
@@ -66,16 +85,47 @@ char	*get_next_line(int fd)
 	return (next_line);
 }
 
-// #include <fcntl.h>
-// #include <stdio.h>
+#include <fcntl.h>
+#include <stdio.h>
 
-// int	main(void)
-// {
-// 	int	fd = open("fichier_alr.txt", O_RDWR);
-// 	char	*next_line;
+int	main(void)
+{
+	int	fd = open("fichier_alr.txt", O_RDONLY);
+	char	*next_line;
 
-// 	next_line = get_next_line(fd);
-// 	printf("%s", next_line);
-// 	free(next_line);
-// 	return (0);
-// }
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	next_line = get_next_line(fd);
+	printf("%s", next_line);
+	return (0);
+}
