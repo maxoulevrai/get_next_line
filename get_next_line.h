@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:03:31 by root              #+#    #+#             */
-/*   Updated: 2025/03/08 03:18:33 by root             ###   ########.fr       */
+/*   Updated: 2025/03/08 20:38:58 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-// # define BUFFER_SIZE 10000000
 
-int	ft_strlen_gnl(char *stash);
+int		ft_strlen(char *stash);
 char	*get_next_line(int fd);
 char	*line_cpy(char *src);
 void	*ft_strjoin_gnl(char *stash, char *buf);

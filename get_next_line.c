@@ -6,13 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/08 03:21:46 by root             ###   ########.fr       */
+/*   Updated: 2025/03/08 22:50:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen_gnl(char *stash)
+int	ft_strlen(char *stash)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	ft_strlen_gnl(char *stash)
 	return (i);
 }
 
-int	is_line_complete(char *stash)
+static int	is_line_complete(char *stash)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ int	is_line_complete(char *stash)
 	return (0);
 }
 
-void	*ft_calloc(size_t nmemb, size_t siz)
+static void	*ft_calloc(size_t nmemb, size_t siz)
 {
 	unsigned char	*mem;
 	size_t			i;
@@ -60,24 +60,24 @@ char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char		*next_line;
-	char		buf[BUFFER_SIZE + 1];
+	char		*buf;
 	int			read_bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	read_bytes = 1;
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!stash)
-	{
 		stash = ft_calloc(1, sizeof(char));
-	}
+	read_bytes = 1;
 	while (!is_line_complete(stash) && read_bytes > 0)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (NULL);
+			return (free(buf), NULL);
 		buf[read_bytes] = '\0';
 		stash = ft_strjoin_gnl(stash, buf);
 	}
+	free(buf);
 	if (!stash || *stash == '\0')
 		return (NULL);
 	next_line = line_cpy(stash);
@@ -90,42 +90,28 @@ char	*get_next_line(int fd)
 
 int	main(void)
 {
-	int	fd = open("fichier_alr.txt", O_RDONLY);
+	int	fd = 12;
 	char	*next_line;
 
+	// fd = open("fichier_alr.txt", O_RDONLY);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
+	free(next_line);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
+	free(next_line);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
+	free(next_line);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
+	free(next_line);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
+	free(next_line);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
-	next_line = get_next_line(fd);
-	printf("%s", next_line);
+	free(next_line);
+	close(fd);
 	return (0);
 }
