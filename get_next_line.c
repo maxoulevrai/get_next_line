@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/07 17:17:12 by root             ###   ########.fr       */
+/*   Updated: 2025/03/08 01:13:11 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_strlen_gnl(char *stash)
 	int	i;
 
 	i = 0;
-	while (stash[i] && stash[i] != '\n')
+	while (stash[i])
 		i++;
 	return (i);
 }
@@ -43,34 +43,39 @@ char	*get_next_line(int fd)
 	char		buf[BUFFER_SIZE + 1];
 	int			read_bytes;
 
-	if (BUFFER_SIZE < 0 || BUFFER_SIZE > INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	read_bytes = 1;
-	next_line = NULL;
-	stash = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!stash)
-		return (NULL);
-	stash[0] = '\0';
+	{
+		stash = malloc(sizeof(char) * BUFFER_SIZE + 1);
+		stash[0] = '\0';
+	}
 	while (!is_line_complete(stash) && read_bytes > 0)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
-		ft_strcat(buf, stash);
+		if (read_bytes == -1)
+			return (NULL);
+		buf[read_bytes] = '\0';
+		stash = ft_strjoin_gnl(stash, buf);
 	}
+	if (!stash || *stash == '\0')
+		return (NULL);
 	next_line = line_cpy(stash);
 	stash_cleanup(&stash);
 	return (next_line);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
+// #include <fcntl.h>
+// #include <stdio.h>
 
-int	main(void)
-{
-	int	fd = open("fichier_alr.txt", O_RDWR);
-	char	*next_line;
+// int	main(void)
+// {
+// 	int	fd = open("fichier_alr.txt", O_RDWR);
+// 	char	*next_line;
 
-	next_line = get_next_line(fd);
-	printf("%s\n", next_line);
-	free(next_line);
-	return (0);	
-}
+// 	next_line = get_next_line(fd);
+// 	printf("%s", next_line);
+// 	free(next_line);
+// 	return (0);
+// }

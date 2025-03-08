@@ -6,50 +6,62 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:07:45 by root              #+#    #+#             */
-/*   Updated: 2025/03/07 17:20:51 by root             ###   ########.fr       */
+/*   Updated: 2025/03/08 01:12:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
-void	ft_strcat(char *src, char *dst)
+void	*ft_strjoin_gnl(char *stash, char *buf)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		total_len;
+	char	*new_stash;
 
+	if (!stash && !buf)
+		return (NULL);
+	total_len = ft_strlen_gnl(stash) + ft_strlen_gnl(buf);
+	new_stash = malloc(sizeof(char) * (total_len + 1));
+	if (!new_stash)
+		return (NULL);
+	i = 0;
 	j = 0;
-	i = ft_strlen_gnl(dst);
-	if (!dst)
+	while (stash && stash[i])
 	{
-		dst = malloc(sizeof(char) * ft_strlen_gnl(src) + ft_strlen_gnl(dst) + 1);
-		dst[0] = '\0';
+		new_stash[i] = stash[i];
+		i++;
 	}
-	while (src[j] && src[j] != '\n')
-	{
-		dst[i + j] = src[j];
-		j++;
-	}
-	dst[i + j] = '\0';
+	while (buf[j])
+		new_stash[i++] = buf[j++];
+	new_stash[i] = '\0';
+	free(stash);
+	return (new_stash);
 }
 
 char	*line_cpy(char *src)
 {
 	int		i;
 	char	*dst;
-	
+
 	i = 0;
-	dst = NULL;
 	if (!src)
 		return (NULL);
-	dst = malloc(sizeof(char) * (ft_strlen_gnl(src) + 1));
+	while (src[i] && src[i] != '\n')
+		i++;
+	if (src[i] == '\n')
+		i++;
+	dst = malloc(sizeof(char) * (i + 1));
 	if (!dst)
 		return (NULL);
+	i = 0;
 	while (src[i] && src[i] != '\n')
 	{
 		dst[i] = src[i];
 		i++;
 	}
+	if (src[i] == '\n')
+		dst[i++] = '\n';
 	dst[i] = '\0';
 	return (dst);
 }
