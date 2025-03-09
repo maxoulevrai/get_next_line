@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/08 22:50:00 by root             ###   ########.fr       */
+/*   Updated: 2025/03/09 01:24:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*get_next_line(int fd)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (free(buf), NULL);
+			return (free(buf), free(stash), NULL);
 		buf[read_bytes] = '\0';
 		stash = ft_strjoin_gnl(stash, buf);
 	}
@@ -82,6 +82,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	next_line = line_cpy(stash);
 	stash_cleanup(&stash);
+	
 	return (next_line);
 }
 
@@ -90,10 +91,10 @@ char	*get_next_line(int fd)
 
 int	main(void)
 {
-	int	fd = 12;
+	int	fd;
 	char	*next_line;
 
-	// fd = open("fichier_alr.txt", O_RDONLY);
+	fd = open("fichier_alr.txt", O_RDONLY);
 	next_line = get_next_line(fd);
 	printf("%s", next_line);
 	free(next_line);
