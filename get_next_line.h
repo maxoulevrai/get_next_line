@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:03:31 by root              #+#    #+#             */
-/*   Updated: 2025/03/08 20:38:58 by root             ###   ########.fr       */
+/*   Updated: 2025/03/09 20:32:47 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@
 # include <stdlib.h>
 # include <limits.h>
 
-int		ft_strlen(char *stash);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 char	*get_next_line(int fd);
-char	*line_cpy(char *src);
-void	*ft_strjoin_gnl(char *stash, char *buf);
+size_t	ft_strlen_gnl(char *str);
+char	*ft_strchr_gnl(char *s, int c);
+char	*ft_strjoin_gnl(char *stash, char *buf);
+char	*extract_line(char *stash);
 void	stash_cleanup(char **stash);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
