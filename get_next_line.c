@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/10 00:59:27 by root             ###   ########.fr       */
+/*   Updated: 2025/03/11 22:11:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ char	*get_next_line(int fd)
 // 	char	*next_line;
 
 // 	fd = open("fichier_alr.txt", O_RDONLY);
-// 	close(fd);
-// 	printf("%d\n", fd);
+// 	// close(fd);
+// 	// printf("%d\n", fd);
 // 	next_line = get_next_line(fd);
 // 	printf("%s", next_line);
 // 	free(next_line);
