@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:19:53 by root              #+#    #+#             */
-/*   Updated: 2025/03/11 22:11:02 by root             ###   ########.fr       */
+/*   Updated: 2025/05/06 19:15:58 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,11 @@ static char	*read_and_store(int fd, char *stash)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
-		{
-			free(buf);
-			return (NULL);
-		}
+			return (free(buf), NULL);
 		buf[read_bytes] = '\0';
 		stash = ft_strjoin_gnl(stash, buf);
 		if (!stash)
-		{
-			free(buf);
-			return (NULL);
-		}
+			return (free(buf), NULL);
 	}
 	free(buf);
 	return (stash);
